@@ -150,6 +150,27 @@ def delete_loan():
         print("Invalid loan selection.")
         return
 
+def delete_loan():
+    data = load_data()
+    customer_id = input("Enter Customer ID: ")
+    if customer_id not in data:
+        print("Customer ID not found.")
+        return
+
+    loans = data[customer_id]["loans"]
+    if not loans:
+        print("No active loans found for this customer.")
+        return
+
+    print("Active Loans:")
+    for i, loan in enumerate(loans):
+        print(f"{i + 1}. Amount: {loan['amount']}, Start Date: {loan['start_date']}")
+
+    loan_index = int(input("Select Loan Number to delete: ")) - 1
+    if loan_index < 0 or loan_index >= len(loans):
+        print("Invalid loan selection.")
+        return
+
     del loans[loan_index]
     save_data(data)
     print("Loan deleted successfully.")
